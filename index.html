@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111111">
+    <meta
+      name="description"
+      content="A playful cancellation notice generator. Keep it friendly, fictional, and free of private information."
+    >
+    <title>You're Cancelled — Welcome to the Problem</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="site-header">
+        <a class="wordmark" href="./" aria-label="You're Cancelled home">
+          <span class="wordmark-mark" aria-hidden="true">!</span>
+          <span>YOU'RE<br>CANCELLED</span>
+        </a>
+        <p class="header-tagline">WELCOME TO THE PROBLEM</p>
+      </header>
+
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow"><span class="status-dot"></span> THE INTERNET'S LEAST OFFICIAL COURT</p>
+        <h1 id="page-title">YOU'RE <span>CANCELLED.</span></h1>
+        <p class="intro">Pick a name. Pick a reason. Keep it playful.</p>
+      </section>
+
+      <section class="generator card" aria-label="Cancellation notice generator">
+        <form id="cancel-form">
+          <label class="field-label" for="person-name">WHO'S GETTING CANCELLED?</label>
+          <input
+            id="person-name"
+            name="name"
+            type="text"
+            maxlength="60"
+            placeholder="Enter their name..."
+            autocomplete="off"
+            required
+          >
+
+          <fieldset class="reason-field">
+            <legend class="field-label">REASON (OPTIONAL)</legend>
+            <div class="reason-options">
+              <label class="choice">
+                <input type="radio" name="reason-choice" value="preset" checked>
+                <span>Pick a charge</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="reason-choice" value="custom">
+                <span>Write a custom joke</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="reason-choice" value="none">
+                <span>No reason</span>
+              </label>
+            </div>
+
+            <label class="visually-hidden" for="preset-reason">Choose a reason</label>
+            <select id="preset-reason" name="preset">
+              <option value="Aggravated Disrespect of Everyone's Time">Always late to plans</option>
+              <option value="Ghosting in the First Degree">Takes forever to text back</option>
+              <option value="Failure to Pass the Vibe Check">Can't take a joke</option>
+              <option value="Unlicensed Professional Hater">Professional hater</option>
+              <option value="First-Degree Vibe Disruption">Ruins the vibe</option>
+            </select>
+
+            <label class="visually-hidden" for="custom-reason">Write a custom reason</label>
+            <input
+              id="custom-reason"
+              name="custom"
+              type="text"
+              maxlength="120"
+              placeholder="A harmless, silly reason..."
+              autocomplete="off"
+              hidden
+            >
+          </fieldset>
+
+          <p class="privacy-note">Keep it playful: use a fictional or consenting friend's name. Don't include private information.</p>
+          <button class="button button-primary" type="submit">
+            <span>CANCEL THIS PERSON</span><span aria-hidden="true">↗</span>
+          </button>
+        </form>
+      </section>
+
+      <section id="notice" class="notice card" aria-labelledby="notice-title" aria-live="polite" hidden>
+        <div class="notice-topline">
+          <span class="case-label">OFFICIAL(ISH) NOTICE</span>
+          <span class="stamp">CASE CLOSED</span>
+        </div>
+        <p class="notice-emoji" aria-hidden="true">💀</p>
+        <h2 id="notice-title">YOU'RE CANCELLED.</h2>
+        <p id="notice-message" class="notice-message"></p>
+        <p id="notice-reason" class="notice-reason" hidden></p>
+        <p class="notice-footer">No explanation necessary. You know what you did.</p>
+        <div class="notice-actions">
+          <button id="copy-message" class="button button-secondary" type="button">COPY CANCELLATION</button>
+          <button id="copy-link" class="button button-secondary" type="button">COPY SHAREABLE LINK</button>
+          <button id="share" class="button button-secondary" type="button">SHARE</button>
+        </div>
+        <p id="action-status" class="action-status" role="status" aria-live="polite"></p>
+        <p class="share-note">A share link includes the entered name and reason. Only share it with permission.</p>
+      </section>
+
+      <footer class="site-footer">
+        <span>100% unofficial. 0% actual consequences.</span>
+        <span>Made for laughs, not pile-ons.</span>
+      </footer>
+    </main>
+  </body>
+</html>
