@@ -6,7 +6,6 @@ const reactionPicker = document.querySelector("#reaction-picker");
 const reactionButtons = Array.from(document.querySelectorAll(".reaction-choice"));
 const reactionStatus = document.querySelector("#reaction-status");
 const notice = document.querySelector("#notice");
-const noticeMessage = document.querySelector("#notice-message");
 const noticeReason = document.querySelector("#notice-reason");
 const actionStatus = document.querySelector("#action-status");
 const hero = document.querySelector(".hero");
@@ -32,15 +31,14 @@ const cancellationText = () => {
           .filter((button) => button.getAttribute("aria-pressed") === "true")
           .map((button) => button.dataset.reaction)
       : [],
-    message: `${name}, I have reviewed the evidence and you're cancelled. This cancellation is effective immediately. No appeals. Case closed!`,
   };
 };
 
 let currentCancellation;
 
-const formatCancellation = ({ reason, reactions, message }) => {
+const formatCancellation = ({ reason, reactions }) => {
   const reactionText = reactions?.length ? ` ${reactions.join(" ")}` : "";
-  return `${message}${reason ? `\n\nREASON FOR CANCELLATION\n${reason}${reactionText}` : ""}\n\nNo explanation necessary. You know what you did.`;
+  return `YOU'RE CANCELLED.${reason ? `\n\nREASON FOR CANCELLATION\n${reason}${reactionText}` : ""}\n\nNo explanation necessary. You know what you did.`;
 };
 
 const createShareUrl = ({ name, reason, reactions }) => {
@@ -55,7 +53,6 @@ const createShareUrl = ({ name, reason, reactions }) => {
 
 const renderCancellation = (data, { isShared = false } = {}) => {
   currentCancellation = data;
-  noticeMessage.textContent = data.message;
   noticeReason.hidden = !data.reason;
   noticeReason.replaceChildren();
 
@@ -204,7 +201,6 @@ if (recipientName) {
       name: recipientName,
       reason,
       reactions: reason ? sharedReactions : [],
-      message: `${recipientName}, I have reviewed the evidence and you're cancelled. This cancellation is effective immediately. No appeals. Case closed!`,
     },
     { isShared: true },
   );
