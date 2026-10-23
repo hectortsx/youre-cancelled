@@ -6,6 +6,9 @@ const notice = document.querySelector("#notice");
 const noticeMessage = document.querySelector("#notice-message");
 const noticeReason = document.querySelector("#notice-reason");
 const actionStatus = document.querySelector("#action-status");
+const hero = document.querySelector(".hero");
+const generator = document.querySelector(".generator");
+const caseLabel = document.querySelector(".case-label");
 
 const cancellationText = () => {
   const name = nameInput.value.trim();
@@ -25,8 +28,35 @@ const cancellationText = () => {
   };
 };
 
-const formatCancellation = ({ name, reason, message }) =>
+let currentCancellation;
+
+const formatCancellation = ({ reason, message }) =>
   `${message}${reason ? `\n\nREASON FOR CANCELLATION\n${reason}` : ""}\n\nNo explanation necessary. You know what you did.`;
+
+const renderCancellation = (data, { isShared = false } = {}) => {
+  currentCancellation = data;
+  noticeMessage.textContent = data.message;
+  noticeReason.hidden = !data.reason;
+  noticeReason.replaceChildren();
+
+  if (data.reason) {
+    const label = document.createElement("strong");
+    label.textContent = "REASON FOR CANCELLATION";
+    noticeReason.append(label, document.createTextNode(data.reason));
+  }
+
+  if (isShared) {
+    hero.hidden = true;
+    generator.hidden = true;
+    caseLabel.textContent = "SHARED NOTICE | READ ONLY";
+  }
+
+  notice.hidden = false;
+  actionStatus.textContent = "";
+  if (!isShared) {
+    notice.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+};
 
 const syncReasonControls = () => {
   const selectedReason = form.elements.namedItem("reason-choice").value;
@@ -44,25 +74,12 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
   if (!form.reportValidity()) return;
 
-  const data = cancellationText();
-  noticeMessage.textContent = data.message;
-  noticeReason.hidden = !data.reason;
-  noticeReason.replaceChildren();
-
-  if (data.reason) {
-    const label = document.createElement("strong");
-    label.textContent = "REASON FOR CANCELLATION";
-    noticeReason.append(label, document.createTextNode(data.reason));
-  }
-
-  notice.hidden = false;
-  actionStatus.textContent = "";
-  notice.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  renderCancellation(cancellationText());
 });
 
 document.querySelector("#copy-message").addEventListener("click", async () => {
   try {
-    await navigator.clipboard.writeText(formatCancellation(cancellationText()));
+    await navigator.clipboard.writeText(formatCancellation(currentCancellation));
     actionStatus.textContent = "Cancellation copied.";
   } catch {
     actionStatus.textContent = "Couldn't access the clipboard. Please copy the notice manually.";
@@ -70,7 +87,7 @@ document.querySelector("#copy-message").addEventListener("click", async () => {
 });
 
 document.querySelector("#copy-link").addEventListener("click", async () => {
-  const data = cancellationText();
+  const data = currentCancellation;
   const url = new URL(window.location.href);
   url.searchParams.set("name", data.name);
   if (data.reason) url.searchParams.set("reason", data.reason);
@@ -85,7 +102,7 @@ document.querySelector("#copy-link").addEventListener("click", async () => {
 });
 
 document.querySelector("#share").addEventListener("click", async () => {
-  const data = cancellationText();
+  const data = currentCancellation;
   const url = new URL(window.location.href);
   url.searchParams.set("name", data.name);
   if (data.reason) url.searchParams.set("reason", data.reason);
@@ -112,21 +129,16 @@ document.querySelector("#share").addEventListener("click", async () => {
 
 const sharedName = new URLSearchParams(window.location.search).get("name");
 const sharedReason = new URLSearchParams(window.location.search).get("reason");
+const recipientName = sharedName?.trim().slice(0, 60);
 
-if (sharedName) {
-  nameInput.value = sharedName.slice(0, 60);
-  if (sharedReason) {
-    const preset = Array.from(presetInput.options).find((option) => option.value === sharedReason);
-    if (preset) {
-      presetInput.value = preset.value;
-    } else {
-      form.elements.namedItem("reason-choice").value = "custom";
-      customInput.value = sharedReason.slice(0, 120);
-      syncReasonControls();
-    }
-  } else {
-    form.elements.namedItem("reason-choice").value = "none";
-    syncReasonControls();
-  }
-  form.requestSubmit();
+if (recipientName) {
+  const reason = sharedReason?.trim().slice(0, 120) ?? "";
+  renderCancellation(
+    {
+      name: recipientName,
+      reason,
+      message: `${recipientName}, I have reviewed the evidence and you're cancelled. This cancellation is effective immediately. No appeals. Case closed!`,
+    },
+    { isShared: true },
+  );
 }
