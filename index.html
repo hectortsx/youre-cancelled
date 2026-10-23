@@ -95,6 +95,47 @@
               autocomplete="off"
               hidden
             >
+
+            <div id="reaction-picker" class="reaction-picker">
+              <p class="field-label">ADD EMOJI OR STICKER (OPTIONAL)</p>
+              <p id="reaction-help" class="reaction-help">Choose up to 3. Tap again to remove.</p>
+              <div class="reaction-group">
+                <span class="reaction-group-label">EMOJI</span>
+                <div class="reaction-options" aria-describedby="reaction-help">
+                  <button class="reaction-choice" type="button" data-reaction="😂" aria-label="Add laughing emoji" aria-pressed="false">😂</button>
+                  <button class="reaction-choice" type="button" data-reaction="💀" aria-label="Add skull emoji" aria-pressed="false">💀</button>
+                  <button class="reaction-choice" type="button" data-reaction="✨" aria-label="Add sparkle emoji" aria-pressed="false">✨</button>
+                  <button class="reaction-choice" type="button" data-reaction="👀" aria-label="Add eyes emoji" aria-pressed="false">👀</button>
+                  <button class="reaction-choice" type="button" data-reaction="🤡" aria-label="Add clown emoji" aria-pressed="false">🤡</button>
+                  <button class="reaction-choice" type="button" data-reaction="🫠" aria-label="Add melting face emoji" aria-pressed="false">🫠</button>
+                  <button class="reaction-choice" type="button" data-reaction="🌈" aria-label="Add rainbow emoji" aria-pressed="false">🌈</button>
+                  <button class="reaction-choice" type="button" data-reaction="❤️" aria-label="Add red heart emoji" aria-pressed="false">❤️</button>
+                  <button class="reaction-choice" type="button" data-reaction="💖" aria-label="Add sparkling heart emoji" aria-pressed="false">💖</button>
+                  <button class="reaction-choice" type="button" data-reaction="💕" aria-label="Add two hearts emoji" aria-pressed="false">💕</button>
+                  <button class="reaction-choice" type="button" data-reaction="🫶" aria-label="Add heart hands emoji" aria-pressed="false">🫶</button>
+                  <button class="reaction-choice" type="button" data-reaction="🔥" aria-label="Add fire emoji" aria-pressed="false">🔥</button>
+                  <button class="reaction-choice" type="button" data-reaction="😭" aria-label="Add loudly crying face emoji" aria-pressed="false">😭</button>
+                  <button class="reaction-choice" type="button" data-reaction="😎" aria-label="Add smiling face with sunglasses emoji" aria-pressed="false">😎</button>
+                  <button class="reaction-choice" type="button" data-reaction="🥳" aria-label="Add partying face emoji" aria-pressed="false">🥳</button>
+                  <button class="reaction-choice" type="button" data-reaction="🙌" aria-label="Add raised hands emoji" aria-pressed="false">🙌</button>
+                  <button class="reaction-choice" type="button" data-reaction="👍" aria-label="Add thumbs up emoji" aria-pressed="false">👍</button>
+                  <button class="reaction-choice" type="button" data-reaction="👎" aria-label="Add thumbs down emoji" aria-pressed="false">👎</button>
+                  <button class="reaction-choice" type="button" data-reaction="💅" aria-label="Add nail polish emoji" aria-pressed="false">💅</button>
+                </div>
+              </div>
+              <div class="reaction-group">
+                <span class="reaction-group-label">STICKERS</span>
+                <div class="reaction-options sticker-options" aria-describedby="reaction-help">
+                  <button class="reaction-choice sticker-choice" type="button" data-reaction="⚖️" aria-label="Add scales sticker" aria-pressed="false">⚖️</button>
+                  <button class="reaction-choice sticker-choice" type="button" data-reaction="🚫" aria-label="Add no entry sticker" aria-pressed="false">🚫</button>
+                  <button class="reaction-choice sticker-choice" type="button" data-reaction="🧾" aria-label="Add receipt sticker" aria-pressed="false">🧾</button>
+                  <button class="reaction-choice sticker-choice" type="button" data-reaction="📉" aria-label="Add falling chart sticker" aria-pressed="false">📉</button>
+                  <button class="reaction-choice sticker-choice" type="button" data-reaction="👋" aria-label="Add waving hand sticker" aria-pressed="false">👋</button>
+                  <button class="reaction-choice sticker-choice" type="button" data-reaction="🪦" aria-label="Add headstone sticker" aria-pressed="false">🪦</button>
+                </div>
+              </div>
+              <p id="reaction-status" class="reaction-status" role="status" aria-live="polite"></p>
+            </div>
           </fieldset>
 
           <p class="privacy-note">Keep it playful: use a fictional or consenting friend's name. Don't include private information.</p>
@@ -120,7 +161,7 @@
           <button id="share" class="button button-secondary" type="button">SHARE</button>
         </div>
         <p id="action-status" class="action-status" role="status" aria-live="polite"></p>
-        <p class="share-note">A share link includes the entered name and reason. Only share it with permission.</p>
+        <p class="share-note">A share link includes the entered name, reason, and selected reactions. Only share it with permission.</p>
       </section>
 
       <footer class="site-footer">
